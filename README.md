@@ -1,2 +1,2 @@
-# thb-typst-template
-Adaption of an unofficial template to Typst
+# THB Typst Template
+Adaption of the [Word template](https://informatik.th-brandenburg.de/studium/abschlussarbeiten/) to Typst
