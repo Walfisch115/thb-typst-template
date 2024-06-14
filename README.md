@@ -1,4 +1,9 @@
-# THB Typst Template
-Adaptation of the [Word template](https://informatik.th-brandenburg.de/studium/abschlussarbeiten/) to Typst.
+# THB Typst Vorlagen
 
-A complete example is shown in the [example folder](https://github.com/Walfisch115/thb-typst-template/tree/main/example). See [example.pdf](https://github.com/Walfisch115/thb-typst-template/blob/main/example/example.pdf) for the rendered PDF.
+Adaption der [THB Vorlagen](https://informatik.th-brandenburg.de/studium/abschlussarbeiten/) des Fachbereich Informatik und Medien für [Typst](https://typst.app/).
+
+Vorlagen inklusive Beispiele für:
+
+- Abschlussarbeit ([Vorschau PDF](thesis/Vorlage%20Thesis.pdf))
+- Abschlussposter ([Vorschau PDF](poster/Vorlage%20Abschlussposter.pdf))
+- Präsentationsvorlage für Vorträge ([Vorschau PDF](presentation/Vorlage%20Präsentation.pdf))

@@ -1,6 +1,6 @@
 #import "conf.typ": conf
 
-#show: doc => conf(
+#show: conf.with(
   title: "TITEL",
   author: "AUTOR",
   matrikelNumber: 12345678,
@@ -9,7 +9,6 @@
   place: "TATTOOINE",
   date: "HEUTE",
   abstract: lorem(70),
-  doc
 )
 
 = Einleitung
