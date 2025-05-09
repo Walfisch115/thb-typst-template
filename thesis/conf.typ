@@ -1,12 +1,16 @@
 #let conf(
   title: none,
+  subtitle: none,
   author: none,
   matrikelNumber: none,
   supervisor: none,
   secondReviewer: none,
   place: none,
-  date: datetime.today().display(),
-  abstract: [],
+  date: none,
+  abstractGerman: none,
+  abstractEnglish: none,
+  bibliographyFile: none,
+  citationStyle: "ieee",
   doc
 ) = {
 
@@ -25,48 +29,75 @@
   show heading.where(level: 2): set text(size: 16pt)
   show heading.where(level: 3): set text(size: 14pt)
   
+  show heading: set block(above: 2.5em, below: 1.5em)
+  
+  set par(leading: 0.8em)
+  
+  set figure(
+    gap: 1.5em,
+  )
+  
   // insert pagebreak before level 1 heading
   show heading.where(level: 1): it => {
     pagebreak(weak: true)
     it
   }
-
-  // increase spacing between headings
-  show heading: it => {
-    v(2.5em, weak: true)
-    it
-    v(1.5em, weak: true)
-  }
-
+  
   // increase padding after figure
   show figure: it => {
-    v(1.5em, weak: true)
+    v(2.5em, weak: true)
     it
-    v(1.5em, weak: true)
+    v(2.5em, weak: true)
   }
-
+  
   // style outline
-  set outline(indent: auto, fill: repeat("  ."))
+  set outline(indent: auto)
+  
+  set outline.entry(
+    fill: pad(
+      repeat([.], gap: 0.3em),
+      left: 0.15em,
+      right: 0.6em
+    )
+  )
 
-  // only apply styling if we are in the table of contents
-  // (not list of figures or list of tables, etc.)
-  show outline.entry: it => {
-    if it.element.func() == heading {
-      if it.level == 1 {
-        v(1.5em, weak: true)
-        strong(it)
-      } else {
-        it
-      }
-    } else {
-      it
+  // style level 1 headings in regular outline
+  show outline.where(target: selector(heading)): it => {
+    show outline.entry.where(level: 1): set outline.entry(fill: none)
+    show outline.entry.where(level: 1): it => {
+      strong(it)
     }
+    it
   }
+
+  let myDate() = {
+    
+    let monthsDe = (
+      "Januar",
+      "Februar",
+      "März",
+      "April",
+      "Mai",
+      "Juni",
+      "Juli",
+      "August",
+      "September",
+      "Oktober",
+      "November",
+      "Dezember",
+    )
+
+    let date = datetime.today()
+    let month = date.month()
+
+    date.display("[day]. " + monthsDe.at(month - 1) + " [year]")
+  }
+
 
   // COVER PAGE
   {
     // remove page number
-    set page(numbering: none)  
+    set page(numbering: none)
 
     image("THB_Logo.svg", width: 7cm)
     v(5em)
@@ -76,27 +107,28 @@
         *#title*
       ]
 
-      #v(3em)
-      *Master-/Bachelorarbeit*
+      #if subtitle != none [     
+        #v(3em)
+        #subtitle
+      ]
 
-      zur Erlangung des Grades Master/Bachelor of XXX \
-      des Fachbereichs Informatik und Medien der \
-      Technischen Hochschule Brandenburg
-
-      #v(3em)
+      #v(5em)
       vorgelegt von: \
       #author
 
       #v(1em)
-      Matrikelnummer: \
+      Matrikelnummer: 
       #matrikelNumber
 
-      #v(5em)   
-      Betreuer: #supervisor \
-      Zweitgutachter: #secondReviewer
+      #v(8em)
+      
+      betreut durch: #secondReviewer \
+      vorgelegt bei: #supervisor
   
-      #v(3em)
-      #place, #date
+      #v(5em)
+      
+      #place, #myDate()
+
     ]
   }
 
@@ -112,8 +144,10 @@
     v(3em)
     grid(
       columns: (1fr, 1fr),
+      row-gutter: 0.8em,
       // maybe replace the signature with an image
-      [#place, #date],[#author]
+      // [Ort, Datum], [Unterschrift],
+      [#place, #myDate()],[#author]
     )
   }
 
@@ -129,13 +163,51 @@
 
     // ABSTRACT
     // show abstract if not empty
-    if abstract != [] {
+    if abstractGerman != none {
+      heading("Kurzfassung")
+      abstractGerman
+    }
+
+    if abstractEnglish != none {
       heading("Abstract")
-      abstract
+      abstractEnglish
     }
 
     // TABLE OF CONTENTS
+    // increase padding above level 1 headings
+    show outline.entry.where(level: 1): set block(above: 1.5em)
     outline()
+  }
+ 
+  // TABLE OF FIGURES
+  // TABLE OF TABLES
+  {
+    set page(numbering: "I")
+    let minEntries = 3 // show if 4 or more entries
+
+    // show if more than x entries
+    context if query(figure.where(kind: image)).filter(f => f.caption != none).len() > minEntries {
+      outline(
+        title: [Abbildungsverzeichnis],
+        target: figure.where(kind: image)
+      )
+    }
+      
+    // show if more than x entries
+    context if query(figure.where(kind: table)).filter(f => f.caption != none).len() > minEntries {
+      outline(
+        title: [Tabellenverzeichnis],
+        target: figure.where(kind: table),
+      )
+    }
+
+    // show if more than x entries
+    context if query(figure.where(kind: "code")).filter(f => f.caption != none).len() > minEntries {
+      outline(
+        title: [Quellcodeverzeichnis],
+        target: figure.where(kind: "code")
+      )
+    }
   }
 
   // DOCUMENT CONTENT
@@ -148,27 +220,12 @@
     doc 
   }
 
-  // TABLE OF FIGURES
-  let minEntries = 0
-  
-  // show if more than x entries
-  context if query(figure.where(kind: image)).filter(f => f.caption != none).len() > minEntries {
-    outline(
-      title: [Abbildungsverzeichnis],
-      target: figure.where(kind: image)
-    )
-  }
-
-  // TABLE OF TABLES
-  // show if more than x entries
-  context if query(figure.where(kind: table)).filter(f => f.caption != none).len() > minEntries {
-    outline(
-      title: [Tabellenverzeichnis],
-      target: figure.where(kind: table),
-    )
-  }
-  
   // BIBLIOGRAPHY
-  // include, if existing
-  // bibliography()
+  if bibliographyFile != none {
+    bibliography(
+      bibliographyFile,
+      title: "Literaturverzeichnis",
+      style: citationStyle
+    )
+  }
 }

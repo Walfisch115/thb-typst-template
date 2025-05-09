@@ -1,19 +1,39 @@
 #import "conf.typ": conf
 
+/* 
+HINWEISE
+
+- subtitle und abstracts können in der config einfach weggelassen werden, wenn sie nicht benötigt werden (dann werden sie nicht gerendert)
+
+- Quellcode kann in Figuren verwendet werden
+- Mit kind: "code" gekennzeichnet, erscheint er im Quellcodeverzeichnis
+
+- Abbildungs-, Tabellen- und Quellcodeverzeichnisse werden ab vier Einträgen hinter dem Inhaltsverzeichnis generiert. 
+*/
+
 #show: conf.with(
   title: "TITEL",
+  subtitle: [
+    *Master-/Bachelorarbeit*
+
+    zur Erlangung des Grades Master/Bachelor of XXX \
+    des Fachbereichs Informatik und Medien der \
+    Technischen Hochschule Brandenburg
+  ],
   author: "AUTOR",
   matrikelNumber: 12345678,
   supervisor: "ERSTER",
   secondReviewer: "ZWEITER",
-  place: "TATTOOINE",
-  date: "HEUTE",
-  abstract: lorem(70),
+  place: "ORT",
+  abstractGerman: lorem(70),
+  abstractEnglish: lorem(70),
+  bibliographyFile: "test.bib",
+  citationStyle: "ieee"
 )
 
 = Einleitung
 
-Dies ist ein Typoblindtext. An ihm kann man sehen, ob alle Buchstaben da sind und wie sie aussehen. Manchmal benutzt man Worte wie Hamburgefonts, Rafgenduks oder Handgloves, um Schriften zu testen (Laugwitz, Held & Schrepp, 2006).
+Dies ist ein Typoblindtext. @DUMMY:1 An ihm kann man sehen, ob alle Buchstaben da sind und wie sie aussehen. Manchmal benutzt man Worte wie Hamburgefonts, Rafgenduks oder Handgloves, um Schriften zu testen (Laugwitz, Held & Schrepp, 2006).
 
 #figure(
   image("Bild1.png"),
@@ -77,6 +97,19 @@ Dies ist ein Typoblindtext. An ihm kann man sehen, ob alle Buchstaben da sind un
 
 #lorem(50)
 
+#figure(
+  ```js
+  // Quellcode mit Syntaxhighlighting
+  function helloWorld() {
+      const text = "Hallo Welt"
+      console.log(text) 
+  }
+  ```,
+  caption: [Beschreibung vom Quellcode],
+  kind: "code",
+  supplement: [Quellcode]
+)
+
 == Erstes Unterkapitel (Ebene 2)
 
 #lorem(50)
@@ -108,3 +141,19 @@ Dies ist ein Typoblindtext. An ihm kann man sehen, ob alle Buchstaben da sind un
 ==	Ausblick
 
 #lorem(50)
+
+// Glossar
+#heading(
+  "Glossar",
+  numbering: none
+)
+
+/ Ligature: A merged glyph.
+/ Kerning: A spacing adjustment
+  between two adjacent letters.
+
+// Anhang
+#heading(
+  "Anhang",
+  numbering: none,
+)
