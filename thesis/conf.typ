@@ -1,3 +1,5 @@
+#import "misc.typ": myDate
+
 #let conf(
   title: none,
   subtitle: none,
@@ -28,6 +30,8 @@
   show heading.where(level: 1): set text(size: 18pt)
   show heading.where(level: 2): set text(size: 16pt)
   show heading.where(level: 3): set text(size: 14pt)
+
+  show heading.where(level: 4): set heading(numbering: none, outlined: false)
   
   show heading: set block(above: 2.5em, below: 1.5em)
   
@@ -70,37 +74,13 @@
     it
   }
 
-  let myDate() = {
-    
-    let monthsDe = (
-      "Januar",
-      "Februar",
-      "März",
-      "April",
-      "Mai",
-      "Juni",
-      "Juli",
-      "August",
-      "September",
-      "Oktober",
-      "November",
-      "Dezember",
-    )
-
-    let date = datetime.today()
-    let month = date.month()
-
-    date.display("[day]. " + monthsDe.at(month - 1) + " [year]")
-  }
-
-
   // COVER PAGE
   {
     // remove page number
     set page(numbering: none)
 
     image("THB_Logo.svg", width: 7cm)
-    v(5em)
+    v(4em)
 
     align(center)[
       #text(size: 16pt)[
@@ -120,7 +100,7 @@
       Matrikelnummer: 
       #matrikelNumber
 
-      #v(8em)
+      #v(5em)
       
       betreut durch: #secondReviewer \
       vorgelegt bei: #supervisor
@@ -140,6 +120,18 @@
     heading("Selbstständigkeitserklärung", outlined: false)
     [
       Hiermit versichere ich, dass ich die vorliegende Arbeit selbstständig verfasst und keine anderen als die angegebenen Quellen oder Hilfsmittel benutzt habe und dass die Arbeit in gleicher oder ähnlicher Form noch keiner anderen Prüfungsbehörde vorgelegt wurde.
+
+/*       #v(2em)
+      
+      #text(style: "italic")[
+        Angaben zur Verwendung KI-basierter Hilfsmittel
+      ]
+
+      #v(0.5em)
+      
+      Zur Unterstützung bei der sprachlichen Überarbeitung sowie zur Verbesserung von Ausdruck und Stil wurden KI-basierte Werkzeuge eingesetzt. Darüber hinaus wurde in einzelnen Teilen KI-generierter Programmcode verwendet, der entsprechend im Quellcode gekennzeichnet ist. Die Auswahl, Anpassung und Einbindung dieser Inhalte sowie die inhaltliche Ausarbeitung und Argumentation erfolgten eigenständig. */
+
+      /* Ich versichere, dass die Nutzung von KI-Hilfsmitteln im Einklang mit den geltenden Prüfungsbestimmungen erfolgt ist und die wissenschaftliche Eigenleistung im Zentrum dieser Arbeit steht. */
     ]
     v(3em)
     grid(
@@ -183,7 +175,16 @@
   // TABLE OF TABLES
   {
     set page(numbering: "I")
-    let minEntries = 3 // show if 4 or more entries
+    let minEntries = 4 // show if 4 or more entries
+
+
+    let in-outline = state("in-outline", false)
+    show outline: it => {
+      in-outline.update(true)
+      it
+      in-outline.update(false)
+    }
+    let flex-caption(short, long) = context if in-outline.get() { short } else { long }
 
     // show if more than x entries
     context if query(figure.where(kind: image)).filter(f => f.caption != none).len() > minEntries {
