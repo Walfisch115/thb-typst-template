@@ -1,14 +1,14 @@
 #let conf(
   title: none,
+  subtitle: none,
   author: none,
-  date: none,
   supervision: none,
   doc
 ) = {
 
   // GENERAL SETTINGS
   set text(lang: "de")
-  set text(font: "Linux Biolinum")
+  // set text(font: "Linux Biolinum")
   set par(justify: true)
   
   // THB Assets
@@ -24,17 +24,33 @@
   set page(
     paper: "a2",
     margin: (
-      left: 5cm, 
-      right: 3cm, 
-      top: 10cm, 
-      bottom: 5cm
+      left: 5.7cm, 
+      right: 2.4cm, 
+      top: 16.7cm, 
+      bottom: 2.6cm
     ),
     footer: footer,
-    footer-descent: 2.5cm,
-    background: place(dx: 2cm, dy: 7cm)[
-      #rect(fill: thbBlue, height: 9cm, width: 100%)
-    ],
-    foreground: align(left + top)[#thbLogo]
+    footer-descent: 0cm,
+    background: {
+      // Blauer Balken
+      place(dx: 2.1cm, dy: 6.8cm)[
+        #rect(fill: thbBlue, height: 8.5cm, width: 39.9cm)
+      ]
+      // Titel im blauen Balken
+      place(dx: 5.7cm, dy: 10.0cm)[
+        #block(width: 33.9cm)[
+          #set text(fill: white)
+          #text(size: 32pt, weight: "bold")[#title]
+          #v(-1.0em)
+          #text(size: 18pt)[
+            #author
+            #linebreak()
+            #subtitle
+          ]
+        ]
+      ]
+    },
+    foreground: place(left + top)[#thbLogo],
   )
 
   // increase padding after figure
@@ -48,23 +64,6 @@
   show figure.caption: it => {
     align(left)[#it]
   }
-
-  // HEADING
-  {
-    set text(fill: white, weight: "bold")
-    
-    text(size: 32pt)[#title]
-    
-    par()[
-      #text(size: 18pt)[
-        #author
-        #linebreak()
-        Bachelorarbeit • Studiengang Informatik • Fachbereich Informatik und Medien • #date
-    ]]
-  }
-
-  // padding between heading and content
-  v(5em)
 
   // CONTENT BODY
   {
