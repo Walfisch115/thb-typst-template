@@ -22,7 +22,7 @@ Jeder Ordner ist in sich abgeschlossen. Du brauchst nur den Ordner der Vorlage, 
 3. Alle Dateien aus dem gewünschten Ordner (z. B. `thesis/`) per Drag & Drop in die Dateiliste ziehen.
 4. `main.typ` öffnen und loslegen.
 
-**Lokal ([Typst CLI](https://github.com/typst/typst) oder VS Code mit [Tinymist](https://marketplace.visualstudio.com/items?itemName=myriad-dreamin.tinymist))**
+**Lokal mit der [Typst CLI](https://github.com/typst/typst)**
 
 ```sh
 git clone https://github.com/Walfisch115/thb-typst-template.git
