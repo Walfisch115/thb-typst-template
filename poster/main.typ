@@ -1,19 +1,29 @@
-#import "conf.typ": conf
-#import "miscellaneous.typ": myDate
+#import "conf.typ": poster
 
-#show: conf.with(
-  title: [
-    Max. Schriftgröße 32, max. 2-zeilig, ZA Schriftgröße +4 Kameragestützte Feinpositionierung eines Quadrokopters
-  ],
-  subtitle: [Bachelorarbeit • Studiengang Informatik • Fachbereich Informatik und Medien • #myDate()],
+// =============================================================================
+// KURZANLEITUNG
+//
+// - Angaben unten eintragen; die Zeile unter dem Namen (Art der Arbeit,
+//   Studiengang, Fachbereich, Datum) wird automatisch erzeugt.
+// - Der Inhalt fließt zweispaltig. Mit #colbreak() beginnt die rechte Spalte.
+// - Titel: max. 2 Zeilen (Schriftgröße 32).
+// =============================================================================
+
+#show: poster.with(
+  title: [Kameragestützte Feinpositionierung eines Quadrokopters],
   author: "Max Mustermann",
+  thesis-type: "Bachelorarbeit",       // oder "Masterarbeit"
+  study-program: "Informatik",
+  // department: "Informatik und Medien",
+  // date: datetime(year: 2026, month: 9, day: 30), // Standard: heute
   supervision: [
-    Betreuung Prof. Dr. sc. techn. John Doe • Technische Hochschule Brandenburg • Dr. Michael Mustermann • Stadtwerke Brandenburg an der Havel
+    Betreuung: Prof. Dr. sc. techn. John Doe • Technische Hochschule Brandenburg •
+    Dr. Michael Mustermann • Stadtwerke Brandenburg an der Havel
   ],
 )
 
 = Aufgabenstellung
-Ziel der Arbeit ist es einen Quadrokopter vom Typ MikroKopter autonom, mit Hilfe einer On-Board-Kamera und bildverarbei-tenden Verfahren, möglichst genauer einem Objekt zu positionieren. Zuvor soll eine GPS-gestützte Grobpositionierung des MikroKopters in der Nähe des gesuchten Objektes erfolgen.
+Ziel der Arbeit ist es einen Quadrokopter vom Typ MikroKopter autonom, mit Hilfe einer On-Board-Kamera und bildverarbeitenden Verfahren, möglichst genauer einem Objekt zu positionieren. Zuvor soll eine GPS-gestützte Grobpositionierung des MikroKopters in der Nähe des gesuchten Objektes erfolgen.
 
 = Konzept
 Die beiden Aufgaben werden teilweise mit On-Board Mitteln und teilweise mit Hilfe einer Bodenstation (am Boden befindliches Notebook) abgearbeitet. 
@@ -33,10 +43,10 @@ Die Bodenstation berechnet fortlaufend, unter Verwendung der detektierten Objekt
 = Bildverarbeitung
 Die Bildverarbeitung ist darauf ausgelegt ein einfaches, einfarbiges Objekt zu erkennen. Als erstes wird die durch das Weitwinkelobjektiv hervorgerufene Verzerrung beseitigt und Kompressionsartefakte sowie Bildrauschen durch einen Gaußfilter entfernt. Um das einfarbige Objekt zu finden, wird eine Transformation in einen HSI-Farbraum mit den Anteilen Farbton, Sättigung und Helligkeit vorgenommen. Das Objekt kann durch Wählen passender Intervalle der HSI-Anteile herausgefiltert werden @boersch2007. Anschließend wird eine Blobsuche durchgeführt, mit deren Hilfe zusammenhängende Bildpunkte ermittelt werden. Der Mittelpunkt des größten gefundenen Blobs wird für die Berechnung der Regelabweichung verwendet.
 
-#linebreak()
+#colbreak() // ab hier rechte Spalte
 
 = Regelung
-Aus der ermittelten Abweichung von der Sollposition werden Steuerkommandos für den MikroKopter berechnet, die der Abweichung entgegenwirken. Diese Aufgabe übernimmt ein Proportional-Differential-Integral-Regler (PID-Regler).Der P-Regler generiert Steuerkommandos proportional zu der Größe der Regelabweichung. Der D-Regler erzeugt Kommandos, welche einer Änderung der Regelabweichung entgegenwirken.
+Aus der ermittelten Abweichung von der Sollposition werden Steuerkommandos für den MikroKopter berechnet, die der Abweichung entgegenwirken. Diese Aufgabe übernimmt ein Proportional-Differential-Integral-Regler (PID-Regler). Der P-Regler generiert Steuerkommandos proportional zu der Größe der Regelabweichung. Der D-Regler erzeugt Kommandos, welche einer Änderung der Regelabweichung entgegenwirken.
 
 = Testsystem
 Die Auswertung der Positionsregelung erfolgt mit Hilfe einer Bodenkamera, die die Bewegung des MikroKopter entlang einer genau definierten Fluglinie aufzeichnet. Mit einem Bewertungstool wird die Position des MikroKopters im aufgezeichneten Video frameweise markiert und in metrische Werte umgerechnet.
@@ -52,7 +62,4 @@ Das linke Diagramm zeigt die Abweichung des MikroKopters von der Sollposition mi
 = Fazit
 In dieser Arbeit wurde gezeigt, dass eine autonome kameragestützte Positionierung des MikroKopters möglich ist. Die Genauigkeit der Positionierung, die mit dem entwickelten System erreicht wurde, übersteigt die Möglichkeiten einer reinen GPS-basierten Lösung deutlich.
 
-#bibliography(
-  "bibliography.bib",
-  title: "Quellen",
-)
+#bibliography("literatur.bib", title: "Quellen")

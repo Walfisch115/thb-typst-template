@@ -1,35 +1,43 @@
 #import "conf.typ": *
 
-#show: conf
+// =============================================================================
+// KURZANLEITUNG
+//
+// - Titel, Name und Datum werden einmal unten festgelegt und erscheinen
+//   automatisch auf der Titelfolie und in der Fußzeile jeder Folie.
+// - Neue Folie:   #slide(title: [Folientitel])[ Inhalt ]
+// - Titelfolie:   #title-slide()  (einzelne Werte überschreibbar)
+// - Zwei Spalten: #two-columns[links][rechts]
+// =============================================================================
 
-// set global values
-#let presentationTitle = [Aufregender Präsentationstitel]
-#let supervisor = [Dr. rer. pol. Max Mustermann]
-#let date = [21.04.2014]
-
-#titleSlide(
-  title: presentationTitle,
-  supervisor: supervisor,
-  date: date
+#show: presentation.with(
+  title: [Aufregender Präsentationstitel],
+  author: [Max Mustermann],
+  subtitle: [Betreuung: Prof. Dr. Erika Musterfrau],
+  date: datetime(year: 2026, month: 4, day: 21), // oder auto für heute
+  // show-total-pages: true,                     // Seitenzahl als "3 / 12"
 )
 
-#slide(
-  presentationTitle: presentationTitle,
-  date: date,
-  title: [Ich bin ein Folientitel],
-  body: [
-    #lorem(30)
-    
-    - Punkt
-    - Punkt
-    - Punkt
+#title-slide()
+
+#slide(title: [Ich bin ein Folientitel])[
+  #lorem(30)
+
+  - Punkt
+  - Punkt
+  - Punkt
+]
+
+#slide(title: [Zwei Spalten])[
+  #two-columns[
+    - Text links
+    - noch ein Punkt
+    - und noch einer
+  ][
+    #rect(width: 100%, height: 5cm, fill: luma(230))[
+      #align(center + horizon)[Platz für ein Bild, z. B. \ `image("bild.png")`]
+    ]
   ]
-)
+]
 
-#slide()
-
-#titleSlide(
-  title: [Vielen Dank für Ihre Aufmerksamkeit!],
-  supervisor: supervisor,
-  date: date
-)
+#title-slide(title: [Vielen Dank für Ihre Aufmerksamkeit!])
