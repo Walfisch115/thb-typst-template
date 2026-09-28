@@ -8,9 +8,6 @@ Adaption der [THB-Vorlagen](https://informatik.th-brandenburg.de/studium/abschlu
 | Abschlussposter (A2) | [`poster/`](poster) | [PDF](poster/Vorlage%20Abschlussposter.pdf) |
 | Präsentation (16:9) | [`presentation/`](presentation) | [PDF](presentation/Vorlage%20Präsentation.pdf) |
 
-> [!NOTE]
-> Dies ist keine offizielle Vorlage der TH Brandenburg. Kläre Formvorgaben (z. B. Deckblatt, Zitierstil, Angaben zu KI-Werkzeugen) im Zweifel mit deiner Betreuung.
-
 ## Schnellstart
 
 Jeder Ordner ist in sich abgeschlossen. Du brauchst nur den Ordner der Vorlage, die du verwenden willst.
@@ -124,9 +121,3 @@ Die Zeile unter dem Namen (Art der Arbeit • Studiengang • Fachbereich • Da
 ```
 
 Titel und Datum erscheinen automatisch in der Fußzeile jeder Folie. Mit `show-total-pages: true` werden die Seitenzahlen als „3 / 12“ angezeigt.
-
-Die Präsentation verwendet die Schrift [Linux Biolinum](https://sourceforge.net/projects/linuxlibertine/). Ist sie nicht installiert, nutzt Typst eine Ersatzschrift und zeigt eine Warnung an. Eine andere Schrift stellst du mit `font: "..."` ein.
-
-## Mitmachen
-
-Fehler gefunden oder Verbesserungsvorschlag? Gern ein [Issue](https://github.com/Walfisch115/thb-typst-template/issues) oder einen Pull Request erstellen.
