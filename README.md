@@ -14,7 +14,7 @@ Jeder Ordner ist in sich abgeschlossen. Du brauchst nur den Ordner der Vorlage, 
 
 **In der Typst-Web-App ([typst.app](https://typst.app))**
 
-1. Repository als ZIP herunterladen (*Code → Download ZIP*) und entpacken.
+1. Repository als ZIP herunterladen und entpacken.
 2. In der Web-App ein leeres Projekt anlegen.
 3. Alle Dateien aus dem gewünschten Ordner (z. B. `thesis/`) per Drag & Drop in die Dateiliste ziehen.
 4. `main.typ` öffnen und loslegen.
